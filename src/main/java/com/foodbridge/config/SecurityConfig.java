@@ -3,6 +3,7 @@ package com.foodbridge.config;
 import com.foodbridge.security.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -29,7 +30,10 @@ public class SecurityConfig {
                         // Only ADMIN can access /users/admin/**
                         .requestMatchers("/users/admin/**")
                         .hasAuthority("ADMIN")
-
+                        .requestMatchers(HttpMethod.POST, "/donations")
+                        .hasAuthority("DONOR")
+                        .requestMatchers(HttpMethod.GET, "/donations/available")
+                        .hasAuthority("NGO")
                         // Registration and login endpoints are public.
                         .requestMatchers("/users/**")
                         .permitAll()

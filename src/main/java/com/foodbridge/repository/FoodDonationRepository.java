@@ -1,0 +1,11 @@
+package com.foodbridge.repository;
+
+import com.foodbridge.entity.FoodDonation;
+import com.foodbridge.enums.DonationStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface FoodDonationRepository extends JpaRepository<FoodDonation,Long> {
+    List<FoodDonation> findByStatus(DonationStatus status);
+}
