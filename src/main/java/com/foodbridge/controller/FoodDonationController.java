@@ -29,4 +29,28 @@ public class FoodDonationController {
                 .status(HttpStatus.OK)
                 .body(foodDonationService.getAvailableDonations());
     }
+    @PutMapping("/{id}/accept")
+    public ResponseEntity<FoodDonation> acceptDonation(@PathVariable Long id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(foodDonationService.acceptsDonation(id));
+    }
+    @GetMapping("/accepted")
+    public ResponseEntity<List<FoodDonation>> getAcceptedDonation(){
+         return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(foodDonationService.getAcceptedDonation());
+    }
+    @PutMapping("/{id}/pickup")
+    public ResponseEntity<FoodDonation> pickUpDonation(@PathVariable Long id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(foodDonationService.pickUpDonation(id));
+    }
+    @PutMapping("/{id}/deliver")
+    public ResponseEntity<FoodDonation> deliverDonation(@PathVariable Long id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(foodDonationService.deliverDonation(id));
+    }
 }

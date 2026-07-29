@@ -21,6 +21,15 @@ public class FoodDonation {
      Hibernate stores the id of the User object assigned as the donor.
     */
     private User donor;
+
+    @ManyToOne
+    @JoinColumn(name = "ngo_id")
+    private User ngo;
+
+    @ManyToOne
+    @JoinColumn(name = "volunteer_id")
+    private User volunteer;
+
     private String foodName;
     private int quantity;
     private String pickupAddress;
