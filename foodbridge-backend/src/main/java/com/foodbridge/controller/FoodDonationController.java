@@ -2,6 +2,7 @@ package com.foodbridge.controller;
 
 import com.foodbridge.entity.FoodDonation;
 import com.foodbridge.service.FoodDonationService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class FoodDonationController {
         this.foodDonationService = foodDonationService;
     }
     @PostMapping
-    public ResponseEntity<FoodDonation> createDonation(@RequestBody FoodDonation foodDonation){
+    public ResponseEntity<FoodDonation> createDonation(@Valid @RequestBody FoodDonation foodDonation){
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(foodDonationService.createDonation(foodDonation));

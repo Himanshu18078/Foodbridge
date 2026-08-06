@@ -3,6 +3,10 @@ package com.foodbridge.entity;
 import com.foodbridge.enums.DonationStatus;
 import com.foodbridge.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -29,10 +33,13 @@ public class FoodDonation {
     @ManyToOne
     @JoinColumn(name = "volunteer_id")
     private User volunteer;
-
+    @NotBlank(message = "Food name is required...")
     private String foodName;
+    @Min(value = 1 , message = "Quantity must be at least one...")
     private int quantity;
+    @NotBlank(message = "Pickup address is required...")
     private String pickupAddress;
+    @Future(message = "Expiry time must be in future...")
     private Timestamp expiryTime;
     @Enumerated(EnumType.STRING)
     private DonationStatus status;

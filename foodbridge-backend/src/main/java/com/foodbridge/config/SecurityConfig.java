@@ -40,6 +40,10 @@ public class SecurityConfig {
                         .hasAuthority("VOLUNTEER")
                         .requestMatchers(HttpMethod.GET, "/donations/*/deliver")
                         .hasAuthority("VOLUNTEER")
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
                         // Registration and login endpoints are public.
                         .requestMatchers("/users/**")
                         .permitAll()

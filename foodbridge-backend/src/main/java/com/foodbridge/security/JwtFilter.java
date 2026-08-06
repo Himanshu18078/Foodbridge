@@ -65,6 +65,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // Store the authenticated user in the SecurityContext.
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println("Authenticated User: " + user.getEmail());
+        System.out.println("Authorities: " + user.getAuthorities());
 
         // Continue the request to the next filter or DispatcherServlet.
         filterChain.doFilter(request, response);
