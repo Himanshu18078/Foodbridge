@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import axiosInstance from "../../api/axiosInstance"
 
 function Login() {
   const [email, setEmail] = useState('')
@@ -6,10 +7,17 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('Email:', email)
-    console.log('Password:', password)
+    axiosInstance.post("/users/login", {
+      email: email,
+      password: password
+    })
+      .then((response) => {
+        console.log(response.data)
+      })
+      .catch((error) => {
+        console.log(error.response.data)
+      })
   }
-
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">

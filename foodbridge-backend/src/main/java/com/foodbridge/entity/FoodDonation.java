@@ -43,4 +43,5 @@ public class FoodDonation {
     private Timestamp expiryTime;
     @Enumerated(EnumType.STRING)
     private DonationStatus status;
+    private String imageUrl;
 }
