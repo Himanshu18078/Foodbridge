@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axiosInstance from "../../api/axiosInstance"
+import { AuthContext } from '../../context/AuthContext'
+import { jwtDecode } from "jwt-decode"
 
-function Login() {
+const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
+  const { user, setUser } = useContext(AuthContext)
   const handleSubmit = (e) => {
     e.preventDefault()
     axiosInstance.post("/users/login", {
@@ -12,7 +14,14 @@ function Login() {
       password: password
     })
       .then((response) => {
-        console.log(response.data)
+        const token = response.data
+        const decoded = jwtDecode(token)
+        localStorage.setItem("token", token)
+        setUser({
+          token: token,
+          role: decoded.role,
+          email: decoded.sub
+        })
       })
       .catch((error) => {
         console.log(error.response.data)
