@@ -2,11 +2,13 @@ import { useState, useContext } from 'react'
 import axiosInstance from "../../api/axiosInstance"
 import { AuthContext } from '../../context/AuthContext'
 import { jwtDecode } from "jwt-decode"
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { user, setUser } = useContext(AuthContext)
+  const nevigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault()
     axiosInstance.post("/users/login", {
@@ -22,6 +24,7 @@ const Login = () => {
           role: decoded.role,
           email: decoded.sub
         })
+        nevigate(`/${decoded.role}/dashboard`);
       })
       .catch((error) => {
         console.log(error.response.data)
