@@ -24,7 +24,7 @@ const Login = () => {
           role: decoded.role,
           email: decoded.sub
         })
-        nevigate(`/${decoded.role}/dashboard`);
+        nevigate(`/${decoded.role.toLowerCase()}/dashboard`);
       })
       .catch((error) => {
         console.log(error.response.data)
