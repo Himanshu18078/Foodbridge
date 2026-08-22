@@ -1,6 +1,10 @@
 import { useState } from "react"
+import axiosInstance from "../../api/axiosInstance";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-function Register() {
+const Register = () => {
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,15 +13,30 @@ function Register() {
   const [organizationName, setOrganizationName] = useState("");
   const [role, setRole] = useState("");
 
-  const handleRegister = (e)=>{
-    e.preventDefault()
-    console.log(`Full Name : ${fullName}`);
-    console.log(`Eamil : ${email}`);
-    console.log(`Password : ${password}`);
-    console.log(`Phone Number : ${phoneNumber}`);
-    console.log(`Address : ${address}`);
-    console.log(`Orgination Name : ${organizationName}`);
-    console.log(`Role : ${role}`);
+  const navigate = useNavigate();
+  const handleRegister = (e) => {
+    e.preventDefault();
+    // Build the request object
+    const requestData = {
+      fullName,
+      email,
+      password,
+      phoneNumber,
+      address,
+      role,
+      organizationName: role === "NGO" ? organizationName : null
+    };
+
+    // Make the API call
+    axiosInstance.post("/users", requestData)
+      .then((response) => {
+        console.log("Registration successful:", response.data);
+        toast.success("Registration successful! Please login.");
+        navigate("/login");
+      })
+      .catch((error) => {
+        toast.error(error.response.data);
+      });
   }
 
   return (

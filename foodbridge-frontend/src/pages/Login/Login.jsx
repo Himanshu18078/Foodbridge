@@ -3,6 +3,7 @@ import axiosInstance from "../../api/axiosInstance"
 import { AuthContext } from '../../context/AuthContext'
 import { jwtDecode } from "jwt-decode"
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -24,10 +25,12 @@ const Login = () => {
           role: decoded.role,
           email: decoded.sub
         })
+        toast.success("Login Successful...");
         nevigate(`/${decoded.role.toLowerCase()}/dashboard`);
       })
       .catch((error) => {
         console.log(error.response.data)
+        toast.error(error.response.data);
       })
   }
   return (
