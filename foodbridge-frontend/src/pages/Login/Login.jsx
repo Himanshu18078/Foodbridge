@@ -26,7 +26,7 @@ const Login = () => {
           email: decoded.sub
         })
         toast.success("Login Successful...");
-        nevigate(`/${decoded.role.toLowerCase()}/dashboard`);
+        nevigate(`/${decoded.role.toLowerCase()}/dashboard`, { replace: true });
       })
       .catch((error) => {
         console.log(error.response.data)
