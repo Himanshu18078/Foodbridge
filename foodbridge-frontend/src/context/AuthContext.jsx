@@ -1,7 +1,7 @@
 import { createContext, use, useContext, useEffect, useState } from "react"
 import { jwtDecode } from "jwt-decode"
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)

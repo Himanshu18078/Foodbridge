@@ -68,6 +68,11 @@ public class JwtFilter extends OncePerRequestFilter {
         System.out.println("Authenticated User: " + user.getEmail());
         System.out.println("Authorities: " + user.getAuthorities());
 
+        // ========== ADD THIS DEBUG CODE ==========
+        System.out.println("=== AUTHENTICATION DEBUG ===");
+        System.out.println("Authenticated: " + SecurityContextHolder.getContext().getAuthentication().isAuthenticated());
+        System.out.println("Authorities: " + SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+        // ==========================================
         // Continue the request to the next filter or DispatcherServlet.
         filterChain.doFilter(request, response);
     }
