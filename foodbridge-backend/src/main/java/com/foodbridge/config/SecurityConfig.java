@@ -12,10 +12,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+
 import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
+
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
@@ -27,45 +29,46 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Disable CSRF because we are using JWT authentication.
                 .csrf(csrf -> csrf.disable())
-
-                // Enable CORS using the bean defined below.
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-
-                // Configure authorization rules.
                 .authorizeHttpRequests(auth -> auth
-                        // Only ADMIN can access /users/admin/**
+                        // Allow public access to uploaded images
+                        .requestMatchers("/uploads/**").permitAll()  // ← ADD THIS LINE
+
+                        // Admin
                         .requestMatchers("/users/admin/**")
                         .hasAuthority("ADMIN")
+
+                        // Donor
                         .requestMatchers(HttpMethod.POST, "/donations")
                         .hasAuthority("DONOR")
+
+                        // NGO
                         .requestMatchers(HttpMethod.GET, "/donations/available")
                         .hasAuthority("NGO")
                         .requestMatchers(HttpMethod.PUT, "/donations/*/accept")
                         .hasAuthority("NGO")
+
+                        // Volunteer
                         .requestMatchers(HttpMethod.GET, "/donations/accepted")
                         .hasAuthority("VOLUNTEER")
-                        .requestMatchers(HttpMethod.GET, "/donations/*/pickup")
+                        .requestMatchers(HttpMethod.PUT, "/donations/*/pickup")
                         .hasAuthority("VOLUNTEER")
-                        .requestMatchers(HttpMethod.GET, "/donations/*/deliver")
+                        .requestMatchers(HttpMethod.PUT, "/donations/*/deliver")
                         .hasAuthority("VOLUNTEER")
-                        .requestMatchers(
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**"
-                        ).permitAll()
-                        // Registration and login endpoints are public.
+
+                        // Swagger
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
+                        .permitAll()
+
+                        // Registration and login
                         .requestMatchers("/users/**")
                         .permitAll()
-                        // All other endpoints require authentication.
+
                         .anyRequest()
                         .authenticated()
                 )
-                // Run our JWT filter before Spring's username/password filter.
-                .addFilterBefore(
-                        jwtFilter,
-                        UsernamePasswordAuthenticationFilter.class
-                );
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

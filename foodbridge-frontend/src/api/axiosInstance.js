@@ -14,10 +14,10 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error) // ye check krrna hai
+  (error) => Promise.reject(error)
 );
 
-// Response Interceptor (NEW)
+// Response Interceptor 
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
