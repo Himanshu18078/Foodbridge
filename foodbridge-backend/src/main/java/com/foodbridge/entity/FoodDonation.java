@@ -39,7 +39,6 @@ public class FoodDonation {
     private int quantity;
     @NotBlank(message = "Pickup address is required...")
     private String pickupAddress;
-    @Future(message = "Expiry time must be in future...")
     private Timestamp expiryTime;
     @Enumerated(EnumType.STRING)
     private DonationStatus status;

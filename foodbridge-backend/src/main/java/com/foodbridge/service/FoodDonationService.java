@@ -78,9 +78,8 @@ public class FoodDonationService {
 
     // Get accepted donations
     public Page<FoodDonation> getAcceptedDonation(Pageable pageable) {
-
-        return foodDonationRepository.findByStatus(
-                DonationStatus.ACCEPTED,
+        return foodDonationRepository.findByStatusIn(
+                List.of(DonationStatus.ACCEPTED, DonationStatus.PICKED_UP),
                 pageable
         );
     }
