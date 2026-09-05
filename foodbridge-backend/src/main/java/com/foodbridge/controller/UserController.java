@@ -8,6 +8,8 @@ import com.foodbridge.dto.LoginRequest;
 import com.foodbridge.entity.User;
 import com.foodbridge.service.UserService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -31,8 +33,18 @@ public class UserController {
         // If the credentials are valid, the service generates and returns a JWT.
         return ResponseEntity.ok(userService.loginUser(loginRequest));
     }
-    @GetMapping("/admin/test")
-    public ResponseEntity<String> adminTest() {
-        return ResponseEntity.ok("Welcome Admin");
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
+    @GetMapping("/profile")
+    public ResponseEntity<User> getProfile() {
+        return ResponseEntity.ok(userService.getProfile());
+    }
+
+    @PutMapping("/profile")
+    public ResponseEntity<User> updateProfile(@RequestBody User updatedUser) {
+        return ResponseEntity.ok(userService.updateProfile(updatedUser));
+    }
+
 }

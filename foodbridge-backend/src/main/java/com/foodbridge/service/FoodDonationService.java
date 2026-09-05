@@ -139,4 +139,13 @@ public class FoodDonationService {
 
         throw new IllegalArgumentException("Donation cannot be delivered");
     }
+    public List<FoodDonation> getAllDonations() {
+        return foodDonationRepository.findAll();
+    }
+    public List<FoodDonation> getMyDonations() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User donor = (User) authentication.getPrincipal();
+        return foodDonationRepository.findByDonor(donor);
+    }
+
 }

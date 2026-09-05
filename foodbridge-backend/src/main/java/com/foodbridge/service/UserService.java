@@ -1,8 +1,11 @@
 package com.foodbridge.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.foodbridge.security.JwtService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,5 +67,28 @@ public class UserService {
         // After successful authentication, generate a JWT and return it to the client.
         // The client will send this JWT with every protected request.
         return jwtService.generateToken(existingUser);
+    }
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+    public User getProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        return userRepository.findById(user.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public User updateProfile(User updatedUser) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
+
+        User user = userRepository.findById(currentUser.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setFullName(updatedUser.getFullName());
+        user.setPhoneNumber(updatedUser.getPhoneNumber());
+        user.setAddress(updatedUser.getAddress());
+
+        return userRepository.save(user);
     }
 }

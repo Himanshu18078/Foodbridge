@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.List;
 
 @RestController
 @RequestMapping("/donations")
@@ -106,5 +107,13 @@ public class FoodDonationController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(foodDonationService.deliverDonation(id));
+    }
+    @GetMapping
+    public ResponseEntity<List<FoodDonation>> getAllDonations() {
+        return ResponseEntity.ok(foodDonationService.getAllDonations());
+    }
+    @GetMapping("/my-donations")
+    public ResponseEntity<List<FoodDonation>> getMyDonations() {
+        return ResponseEntity.ok(foodDonationService.getMyDonations());
     }
 }

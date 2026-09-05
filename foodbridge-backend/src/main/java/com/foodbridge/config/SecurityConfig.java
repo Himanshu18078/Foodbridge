@@ -38,9 +38,15 @@ public class SecurityConfig {
                         // Admin
                         .requestMatchers("/users/admin/**")
                         .hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/users")
+                        .hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/donations")
+                        .hasAuthority("ADMIN")
 
                         // Donor
                         .requestMatchers(HttpMethod.POST, "/donations")
+                        .hasAuthority("DONOR")
+                        .requestMatchers(HttpMethod.GET, "/donations/my-donations")
                         .hasAuthority("DONOR")
 
                         // NGO
@@ -56,6 +62,10 @@ public class SecurityConfig {
                         .hasAuthority("VOLUNTEER")
                         .requestMatchers(HttpMethod.PUT, "/donations/*/deliver")
                         .hasAuthority("VOLUNTEER")
+                        //User
+                        .requestMatchers("/users/profile", "/users/profile/**")
+                        .authenticated()
+
 
                         // Swagger
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
