@@ -1,6 +1,6 @@
 const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-green-50 flex items-center justify-center px-4">
       <div className="text-center max-w-2xl">
         <div className="text-6xl mb-6">🍱</div>
         <h1 className="text-5xl font-bold text-gray-800 mb-4">Welcome to FoodBridge</h1>
