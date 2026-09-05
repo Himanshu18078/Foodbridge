@@ -72,11 +72,11 @@ const NgoDashboard = () => {
                     className="w-full h-48 object-cover"
                   />
                 )}
-                
+
                 {/* Content */}
                 <div className="p-5">
                   <h2 className="text-xl font-semibold text-gray-800">{donation.foodName}</h2>
-                  
+
                   <div className="mt-3 space-y-2">
                     <div className="flex items-center text-sm text-gray-600">
                       <span className="font-medium w-20">Quantity:</span>

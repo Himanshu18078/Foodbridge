@@ -10,6 +10,7 @@ import NgoDashboard from './pages/Ngo/Dashboard'
 import VolunteerDashboard from './pages/Volunteer/Dashboard'
 import AdminDashboard from './pages/Admin/Dashboard'
 import ProtectedRoute from './routes/ProtectedRoute'
+import Profile from './pages/Profile/Profile';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function App() {
@@ -43,8 +44,9 @@ function App() {
             <VolunteerDashboard />
           </ProtectedRoute>
         } />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
-       <ToastContainer 
+      <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
